@@ -103,12 +103,19 @@ class DynamicWidgetBuilder {
 
   static bool _defaultParserInited = false;
 
+  static IconData? Function({required String name})? getIconUsingPrefix;
+
   // use this method for adding your custom widget parser
   static void addParser(WidgetParser parser) {
     log.info(
         "add custom widget parser, make sure you don't overwirte the widget type.");
     _parsers.add(parser);
     _widgetNameParserMap[parser.widgetName] = parser;
+  }
+
+  static void addIcons(IconData? getIconFunc({required String name})) {
+    log.info("add icon retriever.");
+    getIconUsingPrefix = getIconFunc;
   }
 
   static void initDefaultParsersIfNess() {

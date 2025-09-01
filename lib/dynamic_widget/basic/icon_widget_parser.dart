@@ -1,5 +1,4 @@
 import 'package:dynamic_widget/dynamic_widget.dart';
-import 'package:dynamic_widget/dynamic_widget/icons_helper.dart';
 import 'package:dynamic_widget/dynamic_widget/utils.dart';
 import 'package:flutter/material.dart';
 
@@ -8,8 +7,8 @@ class IconWidgetParser extends WidgetParser {
   Widget parse(Map<String, dynamic> map, BuildContext buildContext,
       ClickListener? listener) {
     return Icon(
-      map.containsKey('data')
-          ? getIconUsingPrefix(name: map['data'])
+      map.containsKey('data') && DynamicWidgetBuilder.getIconUsingPrefix != null
+          ? DynamicWidgetBuilder.getIconUsingPrefix!(name: map['data'])
           : Icons.android,
       size: map.containsKey("size") ? map['size']?.toDouble() : null,
       color: map.containsKey('color') ? parseHexColor(map['color']) : null,
@@ -29,7 +28,7 @@ class IconWidgetParser extends WidgetParser {
     var realWidget = widget as Icon;
     return <String, dynamic>{
       "type": widgetName,
-      "data": exportIconGuessFavorMaterial(realWidget.icon),
+      "data": '', //exportIconGuessFavorMaterial(realWidget.icon),
       "size": realWidget.size,
       "color": realWidget.color != null
           ? realWidget.color!.toARGB32().toRadixString(16)
